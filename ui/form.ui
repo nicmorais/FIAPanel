@@ -398,7 +398,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="usuarioLineEdit"/>
+        <widget class="QLineEdit" name="usuarioLineEdit">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
@@ -444,7 +448,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="senhaLineEdit"/>
+        <widget class="QLineEdit" name="senhaLineEdit">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 0);</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -481,7 +489,8 @@
      <property name="styleSheet">
       <string notr="true">font: 13pt ;
 font-weight: bold;
-background-color: rgb(237, 20, 93);</string>
+background-color: rgb(237, 20, 93);
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>CONECTAR</string>
