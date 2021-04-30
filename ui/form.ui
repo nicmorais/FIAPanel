@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>336</height>
+    <width>412</width>
+    <height>347</height>
    </rect>
   </property>
   <property name="palette">
@@ -328,6 +328,19 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QLabel" name="fiapanelLogo">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../data/fiapanel.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item>
     <spacer name="verticalSpacer_6">
      <property name="orientation">

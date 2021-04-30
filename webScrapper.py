@@ -29,10 +29,10 @@ class WebScrapper:
           'usuario': usuario,
           'senha': senha
         }
-
+        self.session = requests.Session()
     def conectar(self):
 
-        response = requests.post('https://www2.fiap.com.br/Aluno/LogOn', headers=self.headers, data=self.data)
+        response = self.session.post('https://www2.fiap.com.br/Aluno/LogOn', headers=self.headers, data=self.data)
         soup = BeautifulSoup(response.text, 'html.parser')
         soup = soup.find_all(class_='i-avisos-item')
 
@@ -50,7 +50,7 @@ class WebScrapper:
                     isNew = True
             else:
                     isNew = False
-            href = "https://www2.fiap.com.br" + i['href']
+            href = "https://www2.fiap.com.br" + (i['href'])
             if(isNew):
                 isNew = "Novo"
 
@@ -61,4 +61,7 @@ class WebScrapper:
         return self.avisos
 
     def getAvisoFull(self, hrefAviso):
-        return
+        avisoFull = self.session.post(hrefAviso, data = self.data)
+        avisoParsed = BeautifulSoup(avisoFull.text, 'html.parser')
+        avisoText = avisoParsed.find_all("div")[0].text
+        return avisoText

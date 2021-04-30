@@ -11,16 +11,22 @@ from PyQt5.uic import loadUi
 
 from webScrapper import *
 
+class avisoFull(QDialog):
+    def __init__(self, avisoContent, parent=None):
+        super().__init__(parent)
+        loadUi("ui/avisoFullWidget.ui", self)
+        self.avisoTextBrowser.setText(avisoContent)
+
+
 class FIAPanelHome(QDialog):
     def __init__(self, usuario, senha, parent=None):
         super().__init__(parent)
         loadUi("ui/home.ui", self)
-        scrapper = WebScrapper(usuario, senha)
+        self.scrapper = WebScrapper(usuario, senha)
 
         self.avisosTableWidget.setRowCount(10)
         self.avisosTableWidget.setColumnCount(4)
         self.avisosTableWidget.horizontalHeader().hide()
-        row = 0
 
         header = self.avisosTableWidget.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
@@ -28,13 +34,28 @@ class FIAPanelHome(QDialog):
 
         self.avisosTableWidget.setColumnHidden(3, True)
 
-        for aviso in scrapper.getAvisos():
+        row = 0
+        for aviso in self.scrapper.getAvisos():
             self.avisosTableWidget.setItem(row, 0, QTableWidgetItem(aviso.dataAviso))
             self.avisosTableWidget.setItem(row, 1, QTableWidgetItem(aviso.title))
             self.avisosTableWidget.setItem(row, 2, QTableWidgetItem(aviso.isNew))
             self.avisosTableWidget.setItem(row, 3, QTableWidgetItem(aviso.href))
 
             row += 1
+
+        self.avisosTableWidget.cellDoubleClicked.connect(self.getHrefAt)
+
+    def getHrefAt(self, row, column):
+        href = self.avisosTableWidget.item(row, 3).text()
+        title = self.avisosTableWidget.item(row, 1).text()
+        self.openAviso(href, title)
+
+    def openAviso(self, hrefAviso, titleAviso):
+        self.avisoDialog = avisoFull(self.scrapper.getAvisoFull(hrefAviso))
+        self.avisoDialog.setWindowTitle(titleAviso)
+        self.avisoDialog.okBtn.clicked.connect(self.avisoDialog.close)
+        self.avisoDialog.show()
+
 
 class FIAPanelLogin(QDialog):
     def __init__(self, parent=None):
