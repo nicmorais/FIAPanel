@@ -1,0 +1,3 @@
+{
+    "files": ["webScrapper.py","fiapanel.py","ui/form.ui","ui/home.ui","ui/avisoFullWidget.ui"]
+}
