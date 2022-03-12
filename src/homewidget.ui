@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>homeWidget</class>
+ <widget class="QWidget" name="homeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -42,6 +42,22 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="atualizandoLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="atualizarBtn">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -64,9 +80,37 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="avisosTableView">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(233, 28, 93);</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="trabalhosTab">
+      <attribute name="title">
+       <string>Trabalhos</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="avisosTab">
+      <attribute name="title">
+       <string>Avisos</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true">color: rgb(233, 28, 93);
+background-color: rgb(61, 56, 70);
+selection-background-color: rgb(233, 28, 93);</string>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
@@ -90,10 +134,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>avisosTableView</sender>
+   <sender>tableView</sender>
    <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>Form</receiver>
-   <slot>verAviso(QModelIndex)</slot>
+   <receiver>homeWidget</receiver>
+   <slot>onTableViewDoubleClicked(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>188</x>
@@ -105,8 +149,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>atualizarBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>homeWidget</receiver>
+   <slot>atualizar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>429</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>homeWidget</receiver>
+   <slot>setUpTableView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>183</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>verAviso(QModelIndex)</slot>
+  <slot>onTableViewDoubleClicked(QModelIndex)</slot>
+  <slot>atualizar()</slot>
+  <slot>setUpTableView()</slot>
  </slots>
 </ui>

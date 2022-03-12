@@ -9,4 +9,4 @@ class AvisoWidget(QtWidgets.QWidget):
         uic.loadUi('src/avisowidget.ui', self)
         self.setWindowTitle(tituloAviso)
         bodyAviso = webScrapper.getAvisoFull(hrefAviso)
-        self.textEdit.setText(bodyAviso)
+        self.textBrowser.setText(bodyAviso)

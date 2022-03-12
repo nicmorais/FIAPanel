@@ -3,13 +3,16 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from src.webscrapper import WebScrapper
 from src.homewidget import HomeWidget
-
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import pyqtSlot
 
 class LoginWidget(QWidget):
     def __init__(self):
         super(LoginWidget, self).__init__()
         uic.loadUi('src/loginwidget.ui', self)
+        self.logoLabel.setPixmap(QPixmap('assets/fiapanel.png'))
 
+    @pyqtSlot()
     def conectar(self):
         usuario = self.rmLineEdit.text()
         senha = self.senhaLineEdit.text()

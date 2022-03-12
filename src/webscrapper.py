@@ -13,6 +13,13 @@ class Aviso:
         self.dataAviso = dataAviso
 
 
+class Trabalho:
+    def __init__(self, data, disciplina, titulo):
+        self.data = data
+        self.disciplina = disciplina
+        self.titulo = titulo
+
+
 class WebScrapper:
     LOGIN_URL = 'https://www2.fiap.com.br/Aluno/LogOn'
     bemVindoTitle = ''
@@ -101,3 +108,51 @@ class WebScrapper:
         avisoParsed = BeautifulSoup(avisoFull.text, 'html.parser')
         avisoText = avisoParsed.find_all("div")[0].text
         return avisoText
+
+    def getTrabalhosList(self, opcao):
+        trabalhosUrl = 'https://www2.fiap.com.br/programas/login/alunos_2004/trabalhoGraduacao/default.asp?titulo_secao=Trabalho'
+
+        if opcao is None:
+            opcao = 0
+
+        payload = {'rdbOpcao': str(opcao)}
+        response = self.session.post(trabalhosUrl,
+                                     headers=self.headers,
+                                     data=payload)
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        trabalhos_soup = soup.find_all(class_='i-trabalhos-section')
+
+        trabalhos = []
+        tags = []
+        try:
+            tags = trabalhos_soup[0].find_all(class_='i-trabalhos-item')
+        except IndexError:
+            pass
+
+        for tag in tags:
+            data = tag.find(class_='i-trabalhos-date').string.strip()
+            disciplina = tag.find(class_='i-trabalhos-title').string.strip()
+            titulo = tag.find(class_='i-trabalhos-subtitle').string.strip()
+            trabalho = Trabalho(data, disciplina, titulo)
+            trabalhos.append(trabalho)
+        return trabalhos
+
+    def getTrabalhosModel(self):
+        trabalhosModel = QStandardItemModel()
+
+        linha = 0
+        coluna = 0
+
+        for trabalho in self.getTrabalhosList(0):
+            trabalhoAttributes = [trabalho.disciplina,
+                                  trabalho.titulo,
+                                  trabalho.data]
+            for attribute in trabalhoAttributes:
+                item = QStandardItem(attribute)
+                trabalhosModel.setItem(linha, coluna, item)
+                coluna += 1
+            linha += 1
+            coluna = 0
+        return trabalhosModel

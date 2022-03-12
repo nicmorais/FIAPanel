@@ -18,12 +18,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTextEdit" name="textEdit">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QTextBrowser" name="textBrowser">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(224, 222, 222);</string>
+      <string notr="true">background-color: rgb(222, 221, 218);</string>
      </property>
     </widget>
    </item>
@@ -43,9 +40,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="fecharBtn">
        <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);
+        <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(233, 28, 93);</string>
        </property>
        <property name="text">
@@ -60,7 +57,7 @@ background-color: rgb(233, 28, 93);</string>
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>fecharBtn</sender>
    <signal>clicked()</signal>
    <receiver>Form</receiver>
    <slot>close()</slot>
